@@ -39,8 +39,7 @@ exports.signup = catchAsync(async (req, res, next) => {
         email: req.body.email,
         password: req.body.password,
         passwordConfirm: req.body.passwordConfirm,
-        passwordChangedAt: req.body.passwordChangedAt,
-        role: req.body.role
+        passwordChangedAt: req.body.passwordChangedAt
     })
     createSendToken(newUser, 201, res)
 })
@@ -50,14 +49,14 @@ exports.login = catchAsync(async (req, res, next) => {
 
     // checando se o usuário inseriu a senha e email
     if (!email || !password) {
-        return next(new AppError('Please provide email and password!', 400))
+        return next(new AppError('Por favor, insira seu email ou senha!', 400))
     }
 
     // checar se usuário existe pelo email e se a senha está correta
     const user = await User.findOne({ email }).select('+password')
 
     if (!user || !(await user.correctPassword(password, user.password))) {
-        return next(new AppError('Incorrect email or password', 401))
+        return next(new AppError('Email ou senha incorretos!', 401))
     }
 
     // se tudo estiver certo, criar o token JWT de acesso

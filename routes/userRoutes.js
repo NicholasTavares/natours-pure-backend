@@ -10,7 +10,7 @@ router.post('/forgotPassword', authController.forgotPassword)
 router.patch('/resetPassword/:token', authController.resetPassword)
 
 // middleware que proteje todas as rotas abaixo
-// lembrando que um middleware sequêncial
+// lembrando que um middleware é sequêncial
 router.use(authController.protect)
 
 router.patch('/updateMyPassword', authController.updatePassword)

@@ -29,7 +29,7 @@ const limiter = rateLimit({
   windowMs: 60 * 60 * 1000,
   message: 'To many request from this IP, please try again in an hour!'
 })
-app.use('/api',limiter)
+app.use('/api', limiter)
 
 // Body parser, reading data from body into req.body
 app.use(express.json({
@@ -43,16 +43,16 @@ app.use(mongoSanitize())
 app.use(xss())
 
 // Prevent paramenter pollution
-  app.use(hpp({
-    whitelist: [
-      'duration',
-      'ratingsQuantity',
-      'ratingsAverage',
-      'maxGroupSize',
-      'difficulty',
-      'price',
-    ]
-  }))
+app.use(hpp({
+  whitelist: [
+    'duration',
+    'ratingsQuantity',
+    'ratingsAverage',
+    'maxGroupSize',
+    'difficulty',
+    'price',
+  ]
+}))
 
 // Serving static files
 app.use(express.static(`${__dirname}/public`));
@@ -65,14 +65,14 @@ app.use((req, res, next) => {
 });
 
 // 3) ROUTES
-app.use('/api/v1/tours', tourRouter);
-app.use('/api/v1/users', userRouter);
+app.use('/api/v1/tours', tourRouter)
+app.use('/api/v1/users', userRouter)
 app.use('/api/v1/reviews', reviewRouter)
 
 app.all('*', (req, res, next) => {
-  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404))
 });
 
-app.use(globalErrorHandler);
+app.use(globalErrorHandler)
 
-module.exports = app;
+module.exports = app
